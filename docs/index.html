@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger Docs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.12.0/swagger-ui.min.css" />
+</head>
+<body>
+    <div id="swagger-ui"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.12.0/swagger-ui-bundle.min.js"></script>
+    <script>
+        function getJsonFile() {
+            // Get the hash (e.g., #wallet)
+            const hash = window.location.hash.replace('#', '');
+            if (!hash) return '/docs/wallet.json'; // Default to wallet.json
+            return `/docs/${hash}.json`; // Load dynamically
+        }
+
+        function loadSwagger() {
+            const url = getJsonFile();
+            console.log("Loading Swagger JSON from:", url); // Debugging
+
+            SwaggerUIBundle({
+                url: url,
+                dom_id: '#swagger-ui',
+                presets: [SwaggerUIBundle.presets.apis],
+                layout: "BaseLayout"
+            });
+        }
+
+        window.onload = loadSwagger;
+        window.addEventListener('hashchange', loadSwagger); // Reload on hash change
+    </script>
+</body>
+</html>
